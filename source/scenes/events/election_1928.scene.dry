@@ -2994,109 +2994,7 @@ go-to: ministries
 Kurt Rosenfeld, a Luxembourgist and close ally with Paul Levi before his death, a left-wing lawyer whom has defended the left, who has advocated for reconciliation with <span style="color: #700000;">**KPD**</span> has been chosen to be chancellor. This move has disgruntled our reformist faction alongside worsening our relations with the Bourgeoise Parties. However, we have seen slightly friendlier ties with the <span style="color: #700000;">Communists</span>, helpful incase we want to get into a <span style="color: #c00000;">United*</span> <span style="color: #9B0000;">Left</span> <span style="color: #700000;">Front</span> and also allows us more positions in government.
 
 
-@ministries
 
-@labor
-title: Labor Ministry
-subtitle: Taking the Labor Ministry is expected of us.
-unavailable-subtitle: We do not have enough leverage.
-tags: mins_1928
-choose-if: leverage >= 5
-view-if: labor_minister_party != "SPD"
-on-arrival: leverage -= 5; labor_minister_party = "SPD"; labor_minister = "Wissell"
-go-to: ministries
-
-Rudolf Wissell of the <span style="color: #c00000;">**SPD**</span> has been appointed labor minister.
-
-@interior
-title: Interior Ministry
-subtitle: Taking the Interior Ministry is expected of us. The Interior Ministry controls domestic security.
-unavailable-subtitle: We do not have enough leverage.
-tags: mins_1928
-choose-if: leverage >= 5
-view-if: interior_minister_party != "SPD"
-on-arrival: leverage -= 5; interior_minister_party = "SPD"; interior_minister = "Severing"
-go-to: ministries
-
-Carl Severing of the <span style="color: #c00000;">**SPD**</span> has been appointed Interior Minister.
-
-@finance
-title: Finance Ministry
-subtitle: The Finance Ministry controls the government budget and taxes.
-unavailable-subtitle: We do not have enough leverage.
-tags: mins_1928
-choose-if: leverage >= 10 
-view-if: finance_minister_party != "SPD"
-on-arrival: leverage -= 10; finance_minister_party = "SPD"; finance_minister = "Naphtali"
-go-to: ministries
-
-Rudolf Hilferding of the <span style="color: #c00000;">**SPD**</span> has been appointed Finance Minister.
-
-@economic
-title: Economic Ministry
-subtitle: The Economic Ministry controls broader economic policy.
-unavailable-subtitle: We do not have enough leverage.
-tags: mins_1928
-choose-if: leverage >= 10 
-view-if: economic_minister_party != "SPD"
-on-arrival: leverage -= 10; economic_minister_party = "SPD"; economic_minister = "Schmidt"
-go-to: ministries
-
-Robert Schmidt of the <span style="color: #c00000;">**SPD**</span> has been appointed Economic Minister.
-
-@justice
-title: Justice Ministry
-subtitle: The Justice Ministry controls the courts.
-unavailable-subtitle: [? if leverage < 10: We do not have enough leverage. ?] [? if cvp_ministers_accepted: Our coalition agreement stipulates that we must forfeit the Justice Ministry. ?]
-tags: mins_1928
-choose-if: leverage >= 10 and not cvp_ministers_accepted
-view-if: justice_minister_party != "SPD"
-on-arrival: leverage -= 10; justice_minister_party = "SPD"; justice_minister = "Radbruch"
-go-to: ministries
-
-Gustav Radbruch of the <span style="color: #c00000;">**SPD**</span> has been appointed Justice Minister.
-
-@foreign
-title: Foreign Ministry
-subtitle: [? if stresemann_dead = 0: This is usually the domain of Gustav Stresemann of the [? if not lvp_formed: <span style="color: #C0A054;">**DVP**</span>?][? if lvp_formed: <span style="color: #FFCC00;">**LVP**</span>?]?][? if stresemann_dead = 1: This is usually the domain of the [? if not lvp_formed and dvp_exist: <span style="color: #C0A054;">**DVP**</span>?][? if not lvp_formed and not dvp_exist: former <span style="color: #C0A054;">**DVP**</span>?][? if lvp_formed: <span style="color: #FFCC00;">**LVP**</span>?] ?].
-unavailable-subtitle: We do not have enough leverage.
-tags: mins_1928
-choose-if: leverage >= 10 
-view-if: foreign_minister_party != "SPD"
-on-arrival: leverage -= 10; foreign_minister_party = "SPD"; foreign_minister = "Breitscheid"
-go-to: ministries
-
-Rudolf Breitscheid of the <span style="color: #c00000;">**SPD**</span> has been appointed Foreign Minister.
-
-
-@agriculture
-title: Agricultural Ministry
-subtitle: This is not our usual domain.
-unavailable-subtitle: [? if leverage < 10: We do not have enough leverage. ?] [? if cvp_ministers_accepted: Our coalition agreement stipulates that we must forfeit the Agricultural Ministry. ?]
-choose-if: leverage >= 10 and not cvp_ministers_accepted
-view-if: agriculture_minister_party != "SPD"
-on-arrival: leverage -= 10; agriculture_minister_party = "SPD"; agriculture_minister = "Baade"
-go-to: ministries
-tags: mins_1928
-
-Fritz Baade of the <span style="color: #c00000;">**SPD**</span> has been appointed Agriculture Minister.
-
-@reichswehr
-title: Reichswehr Ministry
-subtitle: The Ministry responsible for the armed forces is not typically our domain; General Groener and the bourgeois-conservatives will be displeased[? if president = "Hindenburg" or president_ideology != "Left":&nbsp;along with President [+ president +]?].
-unavailable-subtitle: [? if leverage < 15: We do not have enough leverage. ?] [? if cvp_ministers_accepted: Our coalition agreement stipulates that we must forfeit the Reichswehr Ministry. ?]
-tags: mins_1928
-choose-if: leverage >= 15 and not cvp_ministers_accepted
-view-if: reichswehr_minister_party != "SPD"
-on-arrival: leverage -= 15; reichswehr_minister_party = "SPD"; reichswehr_minister = "Leber"; hindenburg_angry += 10
-go-to: ministries
-
-Julius Leber of the <span style="color: #c00000;">**SPD**</span> has been appointed Reichswehr Minister.
-
-
-@no_more
-title: No more ministries.
-on-arrival: {!
 if (Q.labor_minister_party !== "SPD") Q.labor_minister_party = "SAPD";
 if (Q.labor_minister !== "Wissell") Q.labor_minister = "Brenner";
 
@@ -4311,12 +4209,18 @@ if (Q.labor_minister_party !== "SPD" && Q.in_social_liberal_coalition) Q.labor_m
 if (Q.labor_minister_party !== "SPD" && Q.in_social_liberal_coalition && Q.lvp_formed) Q.labor_minister_party = "LVP";
 if (Q.labor_minister !== "Wissell" && Q.in_social_liberal_coalition) Q.labor_minister = "Lemmer";
 
+if (Q.labor_minister_party !== "SPD" && Q.in_socialist_coalition) Q.labor_minister_party = "SAPD";
+if (Q.labor_minister !== "Wissell" && Q.in_socialist_coalition) Q.labor_minister = "Brenner";
+
 if (Q.interior_minister_party !== "SPD") Q.interior_minister_party = "Z";
 if (Q.interior_minister !== "Severing") Q.interior_minister = "Wirth";
 
 if (Q.interior_minister_party !== "SPD" && Q.in_social_liberal_coalition) Q.interior_minister_party = Q.ddp_name;
 if (Q.interior_minister_party !== "SPD" && Q.in_social_liberal_coalition && Q.lvp_formed) Q.interior_minister_party = "LVP";
 if (Q.interior_minister !== "Severing" && Q.in_social_liberal_coalition) Q.interior_minister = "Külz";
+
+if (Q.labor_minister_party !== "SPD" && Q.in_socialist_coalition) Q.interior_minister_party = "SAPD"
+if (Q.interior_minister !== "Severing" && Q.in_socialist_coalition) Q.interior_minister = "Walcher";
 
 if (Q.finance_minister_party !== "SPD" && Q.in_grand_coalition && !Q.lvp_formed) {
     Q.finance_minister_party = "DVP";
@@ -4332,6 +4236,9 @@ if (Q.finance_minister_party !== "SPD" && Q.in_social_liberal_coalition) Q.finan
 if (Q.finance_minister_party !== "SPD" && Q.in_social_liberal_coalition && Q.lvp_formed) Q.finance_minister_party = "LVP";
 if (Q.finance_minister !== "Hilferding" && Q.in_social_liberal_coalition) Q.finance_minister = "Reinhold";
 if (Q.finance_minister !== "Hilferding" && Q.in_social_liberal_coalition && Q.lvp_formed) Q.finance_minister = "Moldenhauer";
+
+if (Q.finance_minister_party !== "SPD" && Q.in_socialist_coalition) Q.finnance_minister_party = "SAPD"
+if (Q.finance_minister !== "Hilferding" && Q.in_socialist_coalition) Q.finnance_minister_party = "Hilferding";
 
 if (Q.economic_minister_party !== "SPD" && Q.in_grand_coalition && !Q.lvp_formed) {
     Q.economic_minister_party = "DVP";
@@ -4356,6 +4263,9 @@ if (Q.economic_minister !== "Schmidt" && Q.in_social_liberal_coalition && Q.lvp_
 if (Q.economic_minister_party !== "SPD" && Q.in_social_catholic_coalition) Q.economic_minister_party = "Z";
 if (Q.economic_minister !== "Schmidt" && Q.in_social_catholic_coalition) Q.economic_minister = "Brüning";
 
+if (Q.economic_minister_party !== "SPD" && Q.in_socialist_coalition) Q.economic_minister_party = "SAPD"
+if (Q.economic_minister !== "Schmidt" && Q.in_socialist_coalition) Q.Q.economic_minister = "Sternberg";
+
 if (Q.justice_minister_party !== "SPD" && !Q.lvp_formed) {
     Q.justice_minister_party = Q.ddp_name;
 } else if (Q.justice_minister_party !== "SPD" && Q.lvp_formed) {
@@ -4369,6 +4279,9 @@ if (Q.justice_minister !== "Radbruch" && (Q.in_popular_front && (Q.liberal_parli
 if (Q.justice_minister_party !== "SPD" && Q.in_social_liberal_coalition) Q.justice_minister_party = Q.ddp_name;
 if (Q.justice_minister_party !== "SPD" && Q.in_social_liberal_coalition && Q.lvp_formed) Q.justice_minister_party = "LVP";
 if (Q.justice_minister !== "Radbruch" && Q.in_social_liberal_coalition) Q.justice_minister = "Koch-Weser";
+
+if (Q.justice_minister_party !== "SPD" && Q.in_socialist_coalition) Q.justice_minister_party = "SAPD"
+if (Q.justice_minister !== "Radbruch" && Q.in_socialist_coalition) Q.justice_minister = "Rosenfeld";
 
 if (Q.foreign_minister_party !== "SPD" && !Q.lvp_formed) {
     Q.foreign_minister_party = "DVP";
@@ -4385,6 +4298,9 @@ if (Q.foreign_minister_party !== "SPD" && Q.in_social_liberal_coalition) Q.forei
 if (Q.foreign_minister_party !== "SPD" && Q.in_social_liberal_coalition && Q.lvp_formed) Q.foreign_minister_party = "LVP";
 if (Q.foreign_minister !== "Breitscheid" && Q.in_social_liberal_coalition) Q.foreign_minister = "Prittwitz";
 
+if (Q.foreign_minister_party !== "SPD" && Q.in_socialist_coalition) Q.foreign_minister_party = "SAPD"
+if (Q.foreign_minister !== "Breitscheid" && Q.in_socialist_coalition) Q.foreign_minister = "Grotewohl";
+
 if (Q.agriculture_minister_party !== "SPD" && !Q.lvp_formed) {
     Q.agriculture_minister_party = Q.ddp_name;
 } else if (Q.agriculture_minister_party !== "SPD" && Q.lvp_formed) {
@@ -4399,8 +4315,14 @@ if (Q.agriculture_minister_party !== "SPD" && Q.in_social_liberal_coalition) Q.a
 if (Q.agriculture_minister_party !== "SPD" && Q.in_social_liberal_coalition && Q.lvp_formed) Q.agriculture_minister_party = "LVP";
 if (Q.agriculture_minister !== "Baade" && Q.in_social_liberal_coalition) Q.agriculture_minister = "Dietrich";
 
+if (Q.agriculture_minister_party !== "SPD" && Q.in_socialist_coalition) Q.agriculture_minister_party = "SAPD"
+if (Q.agriculture_minister !== "Baade" && Q.in_socialist_coalition) Q.agriculture_minister = "Sternberg";
+
 if (Q.reichswehr_minister_party !== "SPD") Q.reichswehr_minister_party = "I";
 if (Q.reichswehr_minister !== "Leber") Q.reichswehr_minister = "Groener";
+
+if (Q.reichswehr_minister_party !== "SPD" && Q.in_socialist_coalition) Q.reichswehr_minister_party = "SAPD"
+if (Q.reichswehr_minister !== "Leber" && Q.in_socialist_coalition) Q.reichswehr_minister = "Siemsen";
 
 if (!Q.dvp_exist) {
     if (Q.foreign_minister_party == "DVP") { 
@@ -4454,56 +4376,56 @@ go-to: prussian_coalition_formation
 @drop_labor
 title: Drop the Labor Ministry.
 view-if: labor_minister_party = "SPD"
-on-arrival: labor_minister_party = "Z"; labor_minister = "Stegerwald"; leverage += 5;
+on-arrival: labor_minister_party = "Z"; labor_minister = "Stegerwald"; labor_minister_party = ddp_name if in_social_liberal_coalition; labor_minister_party = "LVP" if in_social_liberal_coalition and lvp_formed; labor_minister = "Lemmer" if in_social_liberal_coalition; labor_minister_party = "SAPD" if in_socialist_coalition; labor_minister = "Brenner"; leverage += 5; 
 tags: drop_mins_1928
 go-to: ministries
 
 @drop_interior
 title: Drop the Interior Ministry.
 view-if: interior_minister_party = "SPD"
-on-arrival: interior_minister_party = "Z"; interior_minister = "Wirth"; leverage += 5;
+on-arrival: interior_minister_party = "Z"; interior_minister = "Wirth"; interior_minister_party = ddp_name if in_social_liberal_coalition; interior_minister_party = "LVP" if in_social_liberal_coalition and lvp_formed; interior_minister = "Külz" if in_social_liberal_coalition; interior_minister_party = "SAPD" if in_socialist_coalition; interior_minister = "Walcher" if in_socialist_coalition; leverage += 5; 
 tags: drop_mins_1928
 go-to: ministries
 
 @drop_finance
 title: Drop the Finance Ministry.
 view-if: finance_minister_party = "SPD"
-on-arrival: finance_minister_party = "DVP"; finance_minister_party = "LVP" if lvp_formed; finance_minister = "Moldenhauer"; leverage += 10; finance_minister_party = "Z" if in_weimar_coalition or in_popular_front; finance_minister = "Köhler" if in_weimar_coalition or in_popular_front
+on-arrival: finance_minister_party = "DVP"; finance_minister_party = "LVP" if lvp_formed; finance_minister = "Moldenhauer"; leverage += 10; finance_minister_party = "Z" if in_weimar_coalition or in_popular_front or in_social_catholic_coalition; finance_minister = "Köhler" if in_weimar_coalition or in_popular_front or in_social_catholic_coalition; finance_minister_party = "SAPD" if in_socialist_coalition; finance_minister = "Hilferding" if in_socialist_coalition; 
 tags: drop_mins_1928
 go-to: ministries
 
 @drop_economic
 title: Drop the Economic Ministry.
 view-if: economic_minister_party = "SPD"
-on-arrival: economic_minister_party = "DVP"; economic_minister_party = "LVP" if lvp_formed; economic_minister = "Curtius"; leverage += 10; economic_minister_party = ddp_name if in_weimar_coalition or in_popular_front; economic_minister = "Dietrich" if in_weimar_coalition or in_popular_front;
+on-arrival: economic_minister_party = "DVP"; economic_minister_party = "LVP" if lvp_formed; economic_minister = "Curtius"; leverage += 10; economic_minister_party = ddp_name if in_weimar_coalition or in_popular_front; economic_minister = "Dietrich" if in_weimar_coalition or in_popular_front; economic_minister_party = "Z" if in_social_catholic_coalition; economic_minister = "Brüning" if in_social_catholic_coalition; economic_minister_party = "SAPD" if in_socialist_coalition; economic_minister = "Sternberg" if in_socialist_coalition;
 tags: drop_mins_1928
 go-to: ministries
 
 @drop_justice
 title: Drop the Justice Ministry.
 view-if: justice_minister_party = "SPD"
-on-arrival: justice_minister_party = ddp_name; justice_minister = "Koch-Weser"; leverage += 10;
+on-arrival: justice_minister_party = ddp_name; justice_minister_party = "LVP" if lvp_formed; justice_minister = "Koch-Weser"; leverage += 10; justice_minister_party = "Z" if in_social_catholic_coalition; justice_minister = "Guérard" if in_social_catholic_coalition; justice_minister_party = "SAPD" if in_socialist_coalition; justice_minister = "Rosenfeld" if in_socialist_coalition;
 tags: drop_mins_1928
 go-to: ministries
 
 @drop_foreign
 title: Drop the Foreign Ministry.
 view-if: foreign_minister_party = "SPD"
-on-arrival: foreign_minister_party = "DVP"; foreign_minister_party = "LVP" if lvp_formed; foreign_minister = "Stresemann"; foreign_minister = "Curtius" if streseman_dead; leverage += 10; foreign_minister_party = "Z" if in_weimar_coalition or in_popular_front; foreign_minister = "Wirth" if in_weimar_coalition or in_popular_front;
+on-arrival: foreign_minister_party = "DVP"; foreign_minister_party = "LVP" if lvp_formed; foreign_minister = "Stresemann"; foreign_minister = "Curtius" if streseman_dead; leverage += 10; foreign_minister_party = "Z" if in_weimar_coalition or in_popular_front or in_social_catholic_coalition; foreign_minister = "Wirth" if in_weimar_coalition or in_popular_front or in_social_catholic_coalition; foreign_minister_party = "SAPD" if in_socialist_coalition; foreign_minister = "Grotewohl" if in_socialist_coalition;
 tags: drop_mins_1928
 go-to: ministries
 
 @drop_agriculture
 title: Drop the Agriculture Ministry.
 view-if: agriculture_minister_party = "SPD"
-on-arrival: agriculture_minister_party = ddp_name; agriculture_minister = "Dietrich"; leverage += 10; agriculture_minister_party = "Z" if in_weimar_coalition; agriculture_minister = "Hermes" if in_weimar_coalition
+on-arrival: agriculture_minister_party = ddp_name; agriculture_minister = "Dietrich"; leverage += 10; agriculture_minister_party = "Z" if in_weimar_coalition or in_social_catholic_coalition; agriculture_minister = "Hermes" if in_weimar_coalition or in_social_catholic_coalition; agriculture_minister = "SAPD" if in_socialist_coalition; agriculture_minister = "Sternberg" if in_socialist_coalition;
 tags: drop_mins_1928
 go-to: ministries
 
 @drop_reichswehr
 title: Drop the Reichswehr Ministry.
 view-if: reichswehr_minister_party = "SPD"
-on-arrival: reichswehr_minister_party = "I"; reichswehr_minister = "Groener"; leverage += 15; hindenburg_angry -= 10
+on-arrival: reichswehr_minister_party = "I"; reichswehr_minister = "Groener"; leverage += 15; hindenburg_angry -= 10 if not_in_socialist_coalition; reichswehr_minister = "SAPD" if in_socialist_coalition; reichswehr_minister = "Siemsen" if in_socialist_coalition;
 tags: drop_mins_1928
 go-to: ministries
 
