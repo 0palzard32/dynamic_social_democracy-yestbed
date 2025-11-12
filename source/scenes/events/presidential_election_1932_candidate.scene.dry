@@ -16,11 +16,18 @@ if (Q.hindenburg_run) {
     // angry that he is running in the first place
     Q.hindenburg_angry_bruning += 20;
 }
-Q.communist_candidate_1932 = "Thälmann";
+if (Q.kpd_leader = "Conciliators") {
+    Q.communist_candidate_1932 = "Eberlein";
+    Q.communist_candidate_1932_disp = "Hugo Eberlein"
+} else {
+    Q.communist_candidate_1932 = "Thalmann"
+    Q.communist_candidate_1932_disp = "Ernst Thälmann"
+}
 
 Q.spd_candidate_1932_disp = "Otto Braun";
 if (Q.hindenburg_run) Q.reactionary_candidate_1932_disp = "Paul von Hindenburg";
-Q.communist_candidate_1932_disp = "Ernst Thälmann";
+if (Q.communist_candidate_1932) { = "Ernst Thälmann";
+}
 
 if (Q.nsdap_candidate_1932) {
     Q.dnvp_candidate_1932 = "Duesterberg";
@@ -50,7 +57,7 @@ go-to: candidate_selection
 
 With the 1932 German Presidential election coming up next month, we need to decide whether to run a candidate of our own or support one from another party. [? if hindenburg_run: Many are calling for us to support the incumbent Hindenburg, despite his <span style="color: #808080;">reactionary</span> tendencies. Contrary to fears, he hasn’t used his office to destroy the republic yet, so supporting him would hopefully prevent the <span style="color: #7A3C00;">Nazis</span>, who actually support destroying the republic, from winning. ?][? if not hindenburg_run: With Hindenburg's withdrawal, the German Right is in disarray, struggling to find a candidate who can attract support from the moderate right and middle, while also embodying the unifying character of Hindenburg. It’s likely that the candidate they put forward will have a military or industrial background and will be distanced from the partisan bickering of politics. ?]
 
-On the other hand, many in our party are calling for [+ spd_candidate_1932_disp +] to run again, but he is reluctant. [? if kpd_relation >= 50 : Another strange possibility is an united front with the <span style="color: #700000;">Communists</span>, either to support their candidate or our own candidate. ?][? if sapd_formed: The <span style="color: #9B0000;">**SAPD**</span>, our former leftists, are likely to share an endorsement with the <span style="color: #700000;">Communists</span>. ?]
+On the other hand, many in our party are calling for [+ spd_candidate_1932_disp +] to run again, but he is reluctant. [? if kpd_relation >= 50 : Another strange possibility is an united front with the <span style="color: #700000;">Communists</span>, either to support their candidate or our own candidate. ?][? if sapd_formed: The <span style="color: #9B0000;">**SAPD**</span>, our former leftists, [? if kpd_leader = Thalmann: The <span style="color: #9B0000;">**SAPD**</span> seeing the hostility of the <span style="color: #700000;">Communists</span>, are more likely to share an endorsement with us. ?] [? if kpd_leader = Conciliators: are likely to share an endorsement with the <span style="color: #700000;">Communists</span> in the hopes that we will follow to complete the <span style="color: #c00000;">United*</span> <span style="color: #9B0000;">Left</span> <span style="color: #700000;">Front</span>. ?] ?]
 
 Anyhow, let's see who will be the candidates on <span class="tooltip-text" title="good game">the campaign trail</span>.
 
@@ -72,7 +79,8 @@ Q.bourgeois_votes = Q.ddp_votes + Q.dvp_votes + Q.lvp_votes + Q.other_votes + Q.
 if ((Q.lvp_ideology == "Right" && Q.lvp_leader == "Dingeldey" && Q.lvp_formed || Q.dvp_votes >= 6 && Q.bourgeois_parliament && Q.bourgeois_votes >= 40 && !Q.lvp_formed) && Q.liberal_vote >= 8) Q.jarres_unlock_pres = 1;
 if ((Q.dvp_leader == "Luther" || Q.lvp_leader == "Luther") && Q.pro_republic >= 50 && Q.liberal_vote >= 8 && Q.bourgeois_votes >= 35) Q.luther_unlock_pres = 1;
 if (((Q.dstp_formed || Q.ddp_relation < 40 || Q.pro_republic < 40) && Q.ddp_ideology != "Left" && !Q.lvp_formed || Q.lvp_formed && Q.lvp_ideology != "Left" && Q.pro_republic < 50) && Q.liberal_vote >= 8 && Q.bourgeois_votes >= 35) Q.gessler_unlock_pres = 1;
-if (Q.stegerwald_path) Q.adenauer_unlock_pres = 1;
+if ((Q.stegerwald_path && Q.z_leader == "Stegerwald" )) Q.adenauer_unlock_pres = 1;
+if ((Q.stegerwald_path && Q.z_leader == "Kaiser" )) Q.wirth_unlock_pres = 1;
 if (!Q.stegerwald_path && Q.z_relation >= 30 && Q.chancellor != "Brüning" && Q.bourgeois_votes >= 40) Q.bruning_unlock_pres = 1;
 if (!Q.stegerwald_path && !Q.bruning_unlock_pres && !Q.adenauer_unlock_pres) Q.stegerwald_unlock_pres = 1;
 if (Q.dnvp_ideology == "Moderate" && Q.bourgeois_votes < 35 || Q.kvp_formed && Q.bourgeois_votes < 35 || Q.cvp_formed && Q.cvp_ideology == "Right") Q.vorbeck_unlock_pres = 1;
@@ -115,6 +123,7 @@ if (Q.jarres_unlock_pres) count2++;
 if (Q.luther_unlock_pres) count2++;
 if (Q.gessler_unlock_pres) count2++;
 if (Q.adenauer_unlock_pres) count2++;
+if (Q.wirth_unlock_pres) count2++;
 if (Q.bruning_unlock_pres) count2++;
 if (Q.stegerwald_unlock_pres) count2++;
 if (Q.vorbeck_unlock_pres) count2++;
@@ -178,6 +187,18 @@ if (Q.reactionary_candidate_1932_count > 0) {
         Q.reactionary_candidate_1932_count -= 1;
     }
 
+    if (Q.wirth_unlock_pres) {
+        Q.wirth_run = 1;
+        if (Q.reactionary_candidate_1932) {
+            Q.secondary_reactionary_candidate_1932 = "Wirth"
+            Q.secondary_reactionary_candidate_1932_disp = "Joseph Wirth"
+        }
+        if (!Q.reactionary_candidate_1932) {
+            Q.reactionary_candidate_1932 = "Wirth"
+            Q.secondary_reactionary_candidate_1932_disp = "Joseph Wirth
+        }
+    }
+
     if (Q.bruning_unlock_pres) {
         Q.bruning_run = 1; 
         if (Q.reactionary_candidate_1932) {
@@ -234,7 +255,7 @@ if (Q.reactionary_candidate_1932_count > 0) {
         Q.liberal_reactionary_candidate_1932 = 1;
         Q.liberal_reactionary_candidate_1932_name = Q.reactionary_candidate_1932;
     }
-    if (Q.reactionary_candidate_1932 == "Adenauer" || Q.reactionary_candidate_1932 == "Brüning" || Q.reactionary_candidate_1932 == "Stegerwald") {
+    if (Q.reactionary_candidate_1932 == "Adenauer" || Q.reactionary_candidate_1932 == "Brüning" || Q.reactionary_candidate_1932 == "Stegerwald" || Q.reactionary_candidate_1932 == "Wirth") {
         Q.center_reactionary_candidate_1932 = 1;
         Q.center_reactionary_candidate_1932_name = Q.reactionary_candidate_1932;
     }
@@ -243,7 +264,7 @@ if (Q.reactionary_candidate_1932_count > 0) {
         Q.liberal_reactionary_candidate_1932 = 1;
         Q.liberal_reactionary_candidate_1932_name = Q.secondary_reactionary_candidate_1932;
     }
-    if (Q.secondary_reactionary_candidate_1932 == "Adenauer" || Q.secondary_reactionary_candidate_1932 == "Brüning" || Q.secondary_reactionary_candidate_1932 == "Stegerwald") {
+    if (Q.secondary_reactionary_candidate_1932 == "Adenauer" || Q.secondary_reactionary_candidate_1932 == "Brüning" || Q.secondary_reactionary_candidate_1932 == "Stegerwald" || Q.secondary_reactionary_candidate_1932 == "Wirth") {
         Q.center_reactionary_candidate_1932 = 1;
         Q.center_reactionary_candidate_1932_name = Q.secondary_reactionary_candidate_1932;
     }
@@ -284,7 +305,10 @@ if (Q.secondary_reactionary_candidate_1932) {
         if (Q.liberal_reactionary_candidate_1932) Q.other_choice = Q.secondary_reactionary_candidate_1932;
         if (Q.liberal_reactionary_candidate_1932) Q.kvp_choice = Q.secondary_reactionary_candidate_1932;
         if (Q.liberal_reactionary_candidate_1932) Q.dnvp_choice = Q.secondary_reactionary_candidate_1932;
-    } else if (Q.secondary_reactionary_candidate_1932 == "Gessler") {
+    }else if (Q.secondary_reactionary_candidate_1932 == "Wirth") {
+        Q.z_choice = Q.secondary_reactionary_candidate_1932;
+        if (Q.liberal_reactionary_candidate_1932) Q.other_choice = Q.secondary_reactionary_candidate_1932
+    }else if (Q.secondary_reactionary_candidate_1932 == "Gessler") {
         Q.ddp_choice = Q.secondary_reactionary_candidate_1932;
         Q.lvp_choice = Q.secondary_reactionary_candidate_1932;
         Q.dvp_choice = Q.secondary_reactionary_candidate_1932;
@@ -305,7 +329,7 @@ if (Q.reactionary_candidate_1932 == "Luther" || Q.reactionary_candidate_1932 == 
     Q.reactionary_candidate_1932_ideology = "Liberal";
 } else if (Q.reactionary_candidate_1932 == "Westarp" || Q.reactionary_candidate_1932 == "Lettow-Vorbeck") {
     Q.reactionary_candidate_1932_ideology = "Conservative";
-} else if (Q.reactionary_candidate_1932 == "Adenauer" || Q.reactionary_candidate_1932 == "Brüning" || Q.reactionary_candidate_1932 == "Stegerwald") {
+} else if (Q.reactionary_candidate_1932 == "Adenauer" || Q.reactionary_candidate_1932 == "Brüning" || Q.reactionary_candidate_1932 == "Stegerwald" || Q.reactionary_candidate_1932 == "Wirth") {
     Q.reactionary_candidate_1932_ideology = "Centrist";
 }
 
@@ -313,7 +337,7 @@ if (Q.secondary_reactionary_candidate_1932 == "Luther" || Q.secondary_reactionar
     Q.secondary_reactionary_candidate_1932_ideology = "Liberal";
 } else if (Q.secondary_reactionary_candidate_1932 == "Westarp" || Q.secondary_reactionary_candidate_1932 == "Lettow-Vorbeck") {
     Q.secondary_reactionary_candidate_1932_ideology = "Conservative";
-} else if (Q.secondary_reactionary_candidate_1932 == "Adenauer" || Q.secondary_reactionary_candidate_1932 == "Brüning" || Q.secondary_reactionary_candidate_1932 == "Stegerwald") {
+} else if (Q.secondary_reactionary_candidate_1932 == "Adenauer" || Q.secondary_reactionary_candidate_1932 == "Brüning" || Q.secondary_reactionary_candidate_1932 == "Stegerwald" || Q.secondary_reactionary_candidate_1932 == "Wirth") {
     Q.secondary_reactionary_candidate_1932_ideology = "Centrist";
 }
 
@@ -333,6 +357,7 @@ With local elections fast approaching, many parties have opted not to field thei
 - @adenauer
 - @bruning
 - @stegerwald
+- @wirth
 - @vorbeck
 - @westarp
 
@@ -422,6 +447,21 @@ His candidacy is supported by the [? if z_party_name != "CVP": <span style="colo
 
 - @harzburg: We await the decision of the Harzburg Front.
 
+@wirth
+title: Joseph Wirth of the [? if z_party_name != "CVP": <span style="color: #000000;">Center Party</span>?][? if z_party_name == "CVP": <span style="color: #000000;">**CVP**</span>?] and a member of the <span style="color: #FF7F00;">Christian Left**</span>.
+view_if: wirth_unlock_pres
+on-arrival: reactionary+cadiddate_1932_count_2 -=1
+unavailable-subtitle: Words
+face-image: img/portraits/wirth.jpg
+max-visits: 1
+go-to: reactionary_candidates if ractionary_cadidate_1932_count_2 > 0
+
+Jospeh Wirth, situated on the left wing of the <span style="color: #000000;">Center Party</span>, most notable for his time as chancellorships in 1921 and 1922 respectively. He is quite possibly one of the strongest enemies of the <span style="color: #3E88B3;">far*</span>-<span style="color: #7A3C00;">right</span> only rivaled by Jakob Kaiser. Despite the <span style="color: #4B758B;">**BVP**</span> most likely abandoning his candidacy. It has not detered him in the slightest. He is known to be friendly to the <span style="color: #c00000;">**SPD**</span> and would prefer to work with fellow <span style="color: #000000;">rep</span><span style="color: #DD0000;">ubl</span><span style="color: #FFCC00;">ican</span> and will ardently reject the <span style="color: #3E88B3;">far*</span>-<span style="color: #7A3C00;">right</span> much to Schleicher's dismay.\
+
+His candidacy is supported by the [? if z_party_name != "CVP": <span style="color: #000000;">Center Party</span>?][? if z_party_name == "CVP": <span style="color: #000000;">**CVP**</span>?] and may attract other <span style="color: #000000;">rep</span><span style="color: #DD0000;">ubl</span><span style="color: #FFCC00;">ican</span>, possibly some from the [? if not lvp_formed: <span style="color: #C0A054;">**DVP**</span>?][? if lvp_formed: <span style="color: #FFCC00;">**LVP**</span>?].
+
+- @harzburg: We await the decision of the Harzburg Front.
+
 @vorbeck
 title: Paul von Lettow-Vorbeck, war hero of the Great War and [? if not cvp_formed: [? if dnvp_ideology == "Radical": <span style="color: #0087DC;">**KVP**</span>?][? if dnvp_ideology == "Moderate": <span style="color: #3E88B3;">**DNVP**</span>?]?][? if cvp_formed: <span style="color: #000000;">**CVP**</span>?] member.
 view-if: vorbeck_unlock_pres
@@ -502,7 +542,7 @@ face-image: img/portraits/hitler2.jpg
 
 The <span style="color: #7A3C00;">**NSDAP**</span> will run Adolf Hitler, who is likely to only receive the backing of his own party. [? if hindenburg_run: However, there has been some reluctance on Hitler's part to run against President Hindenburg, with his character commanding great respect throughout all corners of Germany. Furthermore, the second most important leader in the <span style="color: #7A3C00;">**NSDAP**</span>, Gregor Strasser, opposes his candidacy as he believes he cannot defeat Hindenburg, but <span style="color: #7A3C00;">Nazi</span> propagandist Joseph Goebbels argues for it. We suspect that the <span style="color: #7A3C00;">Nazis</span> are putting on a show of indecisiveness, and always had Hitler as as candidate in mind. ?][? if not hindenburg_run: Hitler is somewhat reluctant to run in the election, believing he cannot win outright. However, the propaganda value of putting the charismatic Hitler forward ahead of the local elections has justified the risk. If he were to win, it would likely mean the swift collapse of the Republic—and possibly civil war. ?]
 
-- @communist: We await the decision the <span style="color: #700000;">Communists</span>.
+- @communist_selection: We await the decision the <span style="color: #700000;">Communists</span>.
 
 @frick
 on-arrival: {!
@@ -514,7 +554,7 @@ face-image: img/portraits/frick.jpg
 
 The <span style="color: #7A3C00;">**NSDAP**</span> has nominated Wilhelm Frick, who is expected to receive backing only from his own party. [? if hindenburg_run: The decision to run Frick instead of the more charismatic and popular Hitler stems from Hitler’s deep reluctance to challenge the universally respected and personally popular President Hindenburg—believing such a move would tarnish his image. Gregor Strasser’s argument ultimately prevailed over Goebbels’, and Hitler has chosen to sit this one out. ?][? if not hindenburg_run: The decision to run Frick instead of the more charismatic and popular Hitler stems from Hitler’s reluctance to enter an unwinnable race, fearing it would damage his image. By putting forward the more pragmatic Frick, he hopes to attract some conservative support ahead of the local elections.?] Should Frick win, he would serve as little more than a proxy for the <span style="color: #7A3C00;">Nazi</span> leader. 
 
-- @communist: We await the decision the <span style="color: #700000;">Communists</span>.
+- @communist_selection: We await the decision the <span style="color: #700000;">Communists</span>.
 
 @goring
 on-arrival: {!
@@ -526,18 +566,22 @@ face-image: img/portraits/goring.jpg
 
 The <span style="color: #7A3C00;">**NSDAP**</span> has nominated Hermann Göring, who is expected to receive support solely from his own party. Normally, Hitler would have been their candidate, but for one reason or another, he is disqualified from the race. With his reputation as a decorated fighter ace from the Great War and his strong ties to the conservative establishment and industrial elites, Göring will win over some <span style="color: #3E88B3;">nationalists</span> who might have otherwise been wary of Hitler. Still, Göring is widely expected to act as little more than a proxy, taking direction from the <span style="color: #7A3C00;">Nazi</span> leader operating behind the scenes.
 
-- @communist: We await the decision the <span style="color: #700000;">Communists</span>.
+- @communist_selection: We await the decision the <span style="color: #700000;">Communists</span>.
 
-@communist
-go-to: thalmann
+@communist_selection
+go-to: thalmann if ( Q.kpd_leader == "Thalmann"); eberlein if ( Q.kpd_leader == "Conciliators" )
 
 
 @thalmann
 face-image: img/portraits/ThälmannErnst.jpg
 
-The <span style="color: #700000;">**Communists**</span> will run Ernst Thälmann, their leader and candidate in 1925. If we were to not run a candidate, or to support a right-wing or bourgeois one, Thälmann and the <span style="color: #700000;">**KPD**</span> would greatly capitalize by painting themselves as the only left-wing option in the race. However, if our relations with the <span style="color: #700000;">**KPD**</span> are high enough, we may be able to convince him to drop out in favour of a unity candidate between our two parties.
+The <span style="color: #700000;">**Communists**</span> will run Ernst Thälmann, their leader and candidate in 1925. A Third-Period Marxist-Lennist whom is ardently in like with the Comintern. He has constantly attacked us more than the <span style="color: #7A3C00;">Nazis</span> and some of his latest moves, like his embracement of a <span style="color: #7A3C00;">Natioal-populist</span> of *Volksrevolution*, "Scheringer Line" and the "correction of enemies" has damaged the parties reputation. However, if we were to not run a candidate, or to support a right-wing or bourgeois one, Thälmann and the <span style="color: #700000;">**KPD**</span> would greatly capitalize by painting themselves as the only left-wing option in the race. However, if our relations with the <span style="color: #700000;">**KPD**</span> are high enough, we may be able to convince him to drop out in favour of a unity candidate between our two parties though this seems unlikely. 
 
 - @socialist: So, what is our decision? Should we run our own candidate?
+
+@eberlein
+face-image: img/portraits/EberleinHugo.jpg
+Ever since Thälmann has ruined himself with the Witoff Affair, the <span style="color: #700000;">**Communists**</span> will run Hugo Eberlein, one of the 3 main "Conciliators" with Meyer passing away in 1930 and Ewert too busy aboard, he seemed the natural choice. Unlike Thälmann, he is a Luxembourgist like Paul Levi, being friendlier to us and willing to support more of our <span style="color: #9B0000;">Socialist</span> programs to prepare for the revolution in the future while maintaining the gaze of democracy. He focus on a ">United*</span> <span style="color: #9B0000;">Left</span> <span style="color: #700000;">Front</span> to fight the <span style="color: #3E88B3;">far*</span>-<span style="color: #7A3C00;">right</span>. However, if we were to not run a candidate, our voters will no doubt support the <span style="color: #700000;">Communists</span>, if we support a right-wing or bourgeois candidate. The <span style="color: #700000;">Communists</span> will no doubt feel betrayed and see a reduction in relations. However, we can propose a different candidate for the sake of a unity candiate of the left should our relations allow for it. 
 
 @socialist
 go-to: braun
@@ -556,9 +600,9 @@ So, what's our choice?
 - @run_rosenfeld: Run Kurt Rosenfeld of the [? if not left_split: <span style="color: #c00000;">**SPD**</span>?][? if left_split: <span style="color: #9B0000;">**SAPD**</span>?].
 - @run_eckener: Run Hugo Eckener as a unity candidate.
 - @support_hindenburg: Support <span style="color: #808080;">Hindenburg</span>.
-- @support_reactionary: Support [? if (reactionary_candidate_1932 == "Luther" or reactionary_candidate_1932 == "Gessler" or reactionary_candidate_1932 == "Jarres") and lvp_formed: <span style="color: #FFCC00;">**[+ reactionary_candidate_1932 +]**</span>?][? if (reactionary_candidate_1932 == "Luther" or reactionary_candidate_1932 == "Jarres") and not lvp_formed: <span style="color: #C0A054;">**[+ reactionary_candidate_1932 +]**</span>?][? if reactionary_candidate_1932 == "Gessler" and not lvp_formed: <span style="color: #D3C24D;">**[+ reactionary_candidate_1932 +]**</span>?][? if ((reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or reactionary_candidate_1932 == "Westarp") and not kvp_formed: <span style="color: #3E88B3;">**[+ reactionary_candidate_1932 +]**</span>?][? if ((reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or reactionary_candidate_1932 == "Westarp") and kvp_formed: <span style="color: #0087DC;">**[+ reactionary_candidate_1932 +]**</span>?][? if reactionary_candidate_1932 == "Adenauer" or reactionary_candidate_1932 == "Brüning" or reactionary_candidate_1932 == "Stegerwald" or (reactionary_candidate_1932 == "Lettow-Vorbeck" and cvp_formed): <span style="color: #000000;">**[+ reactionary_candidate_1932 +]**</span>?].
-- @support_reactionary_2: Support [? if (secondary_reactionary_candidate_1932 == "Luther" or secondary_reactionary_candidate_1932 == "Gessler" or secondary_reactionary_candidate_1932 == "Jarres") and lvp_formed: <span style="color: #FFCC00;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if (secondary_reactionary_candidate_1932 == "Luther" or secondary_reactionary_candidate_1932 == "Jarres") and not lvp_formed: <span style="color: #C0A054;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if secondary_reactionary_candidate_1932 == "Gessler" and not lvp_formed: <span style="color: #D3C24D;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if ((secondary_reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or secondary_reactionary_candidate_1932 == "Westarp") and not kvp_formed: <span style="color: #3E88B3;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if ((secondary_reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or secondary_reactionary_candidate_1932 == "Westarp") and kvp_formed: <span style="color: #0087DC;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if secondary_reactionary_candidate_1932 == "Adenauer" or secondary_reactionary_candidate_1932 == "Brüning" or secondary_reactionary_candidate_1932 == "Stegerwald" or (secondary_reactionary_candidate_1932 == "Lettow-Vorbeck" and cvp_formed): <span style="color: #000000;">**[+ secondary_reactionary_candidate_1932 +]**</span>?].
-- @support_thalmann: Support [+ communist_candidate_1932_disp +] of the <span style="color: #700000;">**KPD**</span>.
+- @support_reactionary: Support [? if (reactionary_candidate_1932 == "Luther" or reactionary_candidate_1932 == "Gessler" or reactionary_candidate_1932 == "Jarres") and lvp_formed: <span style="color: #FFCC00;">**[+ reactionary_candidate_1932 +]**</span>?][? if (reactionary_candidate_1932 == "Luther" or reactionary_candidate_1932 == "Jarres") and not lvp_formed: <span style="color: #C0A054;">**[+ reactionary_candidate_1932 +]**</span>?][? if reactionary_candidate_1932 == "Gessler" and not lvp_formed: <span style="color: #D3C24D;">**[+ reactionary_candidate_1932 +]**</span>?][? if ((reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or reactionary_candidate_1932 == "Westarp") and not kvp_formed: <span style="color: #3E88B3;">**[+ reactionary_candidate_1932 +]**</span>?][? if ((reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or reactionary_candidate_1932 == "Westarp") and kvp_formed: <span style="color: #0087DC;">**[+ reactionary_candidate_1932 +]**</span>?][? if reactionary_candidate_1932 == "Adenauer" or reactionary_candidate_1932 == "Brüning" or reactionary_candidate_1932 == "Stegerwald" or reactionary_candidate_1932 == "Wirth"or (reactionary_candidate_1932 == "Lettow-Vorbeck" and cvp_formed): <span style="color: #000000;">**[+ reactionary_candidate_1932 +]**</span>?].
+- @support_reactionary_2: Support [? if (secondary_reactionary_candidate_1932 == "Luther" or secondary_reactionary_candidate_1932 == "Gessler" or secondary_reactionary_candidate_1932 == "Jarres") and lvp_formed: <span style="color: #FFCC00;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if (secondary_reactionary_candidate_1932 == "Luther" or secondary_reactionary_candidate_1932 == "Jarres") and not lvp_formed: <span style="color: #C0A054;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if secondary_reactionary_candidate_1932 == "Gessler" and not lvp_formed: <span style="color: #D3C24D;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if ((secondary_reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or secondary_reactionary_candidate_1932 == "Westarp") and not kvp_formed: <span style="color: #3E88B3;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if ((secondary_reactionary_candidate_1932 == "Lettow-Vorbeck" and not cvp_formed) or secondary_reactionary_candidate_1932 == "Westarp") and kvp_formed: <span style="color: #0087DC;">**[+ secondary_reactionary_candidate_1932 +]**</span>?][? if secondary_reactionary_candidate_1932 == "Adenauer" or secondary_reactionary_candidate_1932 == "Brüning" or secondary_reactionary_candidate_1932 == "Stegerwald" or secondary_reactionary_candidate_1932 == "Wirth"or (secondary_reactionary_candidate_1932 == "Lettow-Vorbeck" and cvp_formed): <span style="color: #000000;">**[+ secondary_reactionary_candidate_1932 +]**</span>?].
+- @support_communist: Support [+ communist_candidate_1932_disp +] of the <span style="color: #700000;">**KPD**</span>.
 - @abstain: Abstain from endorsing any candidate.
 
 @view_candidates
@@ -567,6 +611,8 @@ go-to: endorsements_braun if braun_campaign; endorsements_eckener if eckener_cam
 [? if spd_campaign: [? if spd_candidate_1932 != "Eckener": <span style="color: #c00000;">**[+ spd_candidate_1932_disp +]**</span>?][? if spd_candidate_1932 == "Eckener": Hugo <span style="color: #000000;">**Ec**</span><span style="color: #DD0000;">**ken**</span><span style="color: #FFCC00;">**er**</span> ?] - supported by: ?]
 
 [? if spd_campaign: - <span style="color: #c00000;">**SPD**</span> ?]
+
+[? if kpd_leader: "Thalmann" and sapd_formed and spd_campaign - <span style="color: #9B0000;">**SAPD**</span>  ?]
 
 [? if kpd_support_spd == 1 and sapd_formed and spd_campaign: - <span style="color: #9B0000;">**SAPD**</span> ?]
 
@@ -630,9 +676,9 @@ go-to: endorsements_braun if braun_campaign; endorsements_eckener if eckener_cam
 
 [? if kpd_support_spd == 0 and communist_candidate_1932: - <span style="color: #700000;">**KPD**</span> ?]
 
-[? if kpd_support_spd == 0 and communist_candidate_1932 and sapd_formed: - <span style="color: #9B0000;">**SAPD**</span> ?]
+[? if kpd_support_spd == 0 and communist_candidate_1932 and kpd_leader = "Conciliators" and sapd_formed: - <span style="color: #9B0000;">**SAPD**</span> ?]
 
-[? if spd_support_thalmann == 1: - <span style="color: #c00000;">**SPD**</span> ?]
+[? if spd_support_communist == 1: - <span style="color: #c00000;">**SPD**</span> ?]
 
 [? if dnvp_candidate_1932: [? if dnvp_ideology == "Radical": <span style="color: #3E88B3;">**[+ dnvp_candidate_1932_disp +]**</span>?][? if dnvp_ideology == "Moderate": <span style="color: #003755;">**[+ dnvp_candidate_1932_disp +]**</span>?] - supported by: ?]
 
@@ -714,7 +760,7 @@ if (Q.hindenburg_run) {
     if (Q.cnblp_defect) Q.hindenburg_unity -= 1;
     if (Q.second_bruning_cabinet_seen) Q.hindenburg_unity -= 1;
     if (Q.spd_support_reactionary) Q.hindenburg_unity -= 3;
-    if (Q.spd_campaign || Q.spd_support_thalmann || Q.kpd_support_spd) Q.hindenburg_unity += 3;
+    if (Q.spd_campaign || Q.spd_support_communist || Q.kpd_support_spd) Q.hindenburg_unity += 3;
 
     if (Q.hindenburg_unity >= 8) {
         Q.hindenburg_support += 2;
@@ -859,21 +905,21 @@ on-arrival: spd_support_reactionary = 1; spd_support_reactionary_2 = 1; spd_choi
 
 For some reason, whether we are physically <i>unable</i> to run a candidate of our own, or genuinely believe that [+ secondary_reactionary_candidate_1932 +] is the safest bet for German democracy, we are supporting him now. 
 
-@support_thalmann
+@support_communist
 choose-if: kpd_relation >= 50 and reformist_strength < left_strength and not schleicher_spd
 unavailable-subtitle: [? if kpd_relation < 50 : We do not have good enough relations with the <span style="color: #700000;">Communists</span>, so they are not even willing to accept our support. ?] [? if reformist_strength >= left_strength : The reformist faction is able to dissuade the party from supporting this arrangement. ?][? if schleicher_spd: As part of our deal with Schleicher, we are now obligated to support Hindenburg’s re-election. ?]
 
 Supporting [+ communist_candidate_1932 +] is rather unpopular in our party, even if the <span style="color: #700000;">**Communists**</span> accept our support. Are we sure?
 
-- @support_thalmann_2: Yes, we will support <span style="color: #700000;">**[+ communist_candidate_1932 +]**</span>, despite the reformists' pleas against it.
+- @support_communist_2: Yes, we will support <span style="color: #700000;">**[+ communist_candidate_1932 +]**</span>, despite the reformists' pleas against it.
 - @run_braun: Support <span style="color: #c00000;">Braun</span> instead.
 - @support_hindenburg: Support <span style="color: #808080;">Hindenburg</span> instead.
 - @run_rosenfeld: Run Kurt Rosenfeld of the [? if not left_split: <span style="color: #c00000;">**SPD**</span>?][? if left_split: <span style="color: #9B0000;">**SAPD**</span>?] instead.
 - @run_eckener: Run Hugo Eckener as a unity candidate instead.
 - @abstain: Abstain from endorsing any candidate instead.
 
-@support_thalmann_2
-on-arrival: spd_support_thalmann = 1; reformist_dissent += 15; center_dissent += 10; labor_dissent += 5; neorevisionist_dissent += 10; catholics_spd -= 5; workers_spd -= 3; workers_kpd += 5; kpd_relation += 10; communist_coalition += 2; z_relation -= 15; dvp_relation -= 15; ddp_relation -= 10; dvp_right += 10; ddp_right += 6; ddp_cohesion -= 6; lvp_right += 10
+@support_communist_2
+on-arrival: spd_support_communist = 1; reformist_dissent += 15; center_dissent += 10; labor_dissent += 5; neorevisionist_dissent += 10; catholics_spd -= 5; workers_spd -= 3; workers_kpd += 5; kpd_relation += 10; communist_coalition += 2; z_relation -= 15; dvp_relation -= 15; ddp_relation -= 10; dvp_right += 10; ddp_right += 6; ddp_cohesion -= 6; lvp_right += 10
 
 Fine. We have thrown our support to Chairman [+ communist_candidate_1932 +] of the <span style="color: #700000;">**KPD**</span> to the dismay of our bourgeois allies.
 
@@ -985,7 +1031,7 @@ if (Q.reactionary_candidate_1932 == "Luther" || Q.reactionary_candidate_1932 == 
     Q.reactionary_candidate_1932_ideology = "Liberal";
 } else if (Q.reactionary_candidate_1932 == "Westarp" || Q.reactionary_candidate_1932 == "Lettow-Vorbeck") {
     Q.reactionary_candidate_1932_ideology = "Conservative";
-} else if (Q.reactionary_candidate_1932 == "Adenauer" || Q.reactionary_candidate_1932 == "Brüning" || Q.reactionary_candidate_1932 == "Stegerwald") {
+} else if (Q.reactionary_candidate_1932 == "Adenauer" || Q.reactionary_candidate_1932 == "Brüning" || Q.reactionary_candidate_1932 == "Stegerwald") || Q>reactionary_candidate_1932 == "Wirth" {
     Q.reactionary_candidate_1932_ideology = "Centrist";
 }
 

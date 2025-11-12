@@ -37,6 +37,7 @@ on-arrival: kpd_relation -= 8; workers_spd -= 4; unemployed_spd -= 4; workers_kp
 
 Unfortunately, we have failed to accomplish all of the goals the <span style="color: #700000;">**KPD**</span> set out. They plan to call a vote of no confidence against our government, and have already begun mounting a propaganda campaign to delegitimize our government in the eyes of the workers.
 
+- @appeal: Appeal to the <span style="color: #700000;">Communists</span> to have patience - we are trying!
 - @new_elections: New elections will be called.
 - @skibidi: Could we form a new government based on the [? if z_party_name != "CVP": <span style="color: #000000;">Center Party</span>?][? if z_party_name == "CVP": <span style="color: #000000;">**CVP**</span>?] and [? if not lvp_formed: <span style="color: #D3C24D;">**[+ ddp_name +]**</span>[? if dvp_exist: (and possibly <span style="color: #C0A054;">**DVP**</span>)?]?][? if lvp_formed: <span style="color: #FFCC00;">**LVP**</span>?]?
 
@@ -44,6 +45,13 @@ Unfortunately, we have failed to accomplish all of the goals the <span style="co
 on-arrival: workers_spd += 4; unemployed_spd += 4; kpd_relation += 6; workers_kpd += 4; kpd_coalition_success += 1; rfb_strength += 150; rfb_militancy += 0.1; reichsexekution += 1
 
 As expected, we have completed the goals set by the <span style="color: #700000;">**KPD**</span>. [? if president == "Hindenburg": However, over the past few months, President Hindenburg's concerns over our coalition government have grown... ?]
+
+@appeal
+choose-if: (kpd_goals_completed_prussia >= 2 and kpd_relation > 50 and kpd_appeal_seen = 0) or kpd_leader = "Conciliators"
+unavailable-subtitle: [? if kpd_score < 4: They do not see us as serious in trying to achieve the goals of the coalition. ?] [? if kpd_relation < 50: Our relations are too poor. ?] [? if kpd_appeal_seen = 1: we do not have any more time. ?]
+on-arrival: kpd_ultimatum_prussia_seen = 0; kpd_ultimatum_prussia_timer += 6; kpd_appeal_seen = 1
+
+We argue that we are working hard to achieve the coalition's goals, and in the name of proletarian solidarity, we must make this coalition function. Surprisingly, the <span style="color: #700000;">**KPD**</span> hears our pleas, and is willing to give us six more months before the coalition goals must be achieved.
 
 @skibidi
 subtitle: modman is lazy and doesn't want to code this

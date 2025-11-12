@@ -529,6 +529,8 @@ if (Q.hugenberg_dvp) Q.far_right_coalition_prussia = parseFloat((Q.far_right_coa
 
 Q.left_coalition_prussia = parseFloat((Q.spd_r_prussia + Q.kpd_r_prussia + Q.sapd_r_prussia).toFixed(1));
 
+Q.socialist_coalition = parseFloat((Q.spd_r + Q.sapd_r).toFixed(1));
+
 if (Q.lvp_formed) {
     Q.popular_front_coalition_prussia = parseFloat((Q.spd_r_prussia + Q.kpd_r_prussia + Q.z_r_prussia + Q.sapd_r_prussia).toFixed(1));
 } else if (Q.liberal_parliament == 0) {
@@ -841,6 +843,7 @@ go-to: coalition_menu
 - @schleicher_majority_coalition_prussia
 - @schleicher_left_coalition_prussia
 - @schleicher_right_coalition_prussia
+- @socialist_coalition
 - @spd_majority
 - @weimar_coalition_prussia
 - @social_christian_coalition_prussia
@@ -890,6 +893,16 @@ on-arrival: in_schleicher_right_coalition_prussia = 1; prussia_leader = "Goerdel
 Schleicher's preferred coalition is one with the right, cooperating with the hard line <span style="color: #6A1E1E;">**DSU**</span> to enact sweeping reforms to the education and policing system reformed under our years of rule. 
 
 [+ prussia_leader +] has been selected as Minister-President of Prussia.
+
+@socialist_coalition
+title: The more things <span style="color: #c00000;">change</span>, the more things stay the <span style="color: #9B0000;">same</span>.
+subtitle: <span style="color: #c00000;">**SPD**</span> + <span style="color: #9B0000;">**SAPD**</span>: [+ socialist_coalition +]%
+view-if: socialist_coalition >= 50
+on-arrival: pro_republic += 5; reichswehr_loyalty -= 0.05; prussia_leader = "Wels"; in_spd_majority_prussia = 1; prussian_police_loyalty += 0.1; prussian_police_strength += 50; democratization += 3; coup_progress += 1; capital_strike_progress += 2; ddp_relation -= 3; lvp_relation -= 3; z_relation -= 3; spd_prussia = 1
+
+Despite being seperate, we have enough votes to form a coalition with the <span style="color: #9B0000;">**SAPD**</span>. Its almost like things never changed as it functions like a <span style="color: #c00000;">**SPD**</span>.
+
+Wels is selected to be the Minister-President of Prussia.
 
 @spd_majority
 title: <span style="color: #c00000;">**SPD**</span> majority alone
