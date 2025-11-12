@@ -2939,19 +2939,19 @@ on-arrival: chancellor = "Braun"; chancellor_party = "SPD"; kpd_relation -= 5; s
 
 Otto Braun, one of our most experienced party members, a prussian representative, a friendly face to the Bourgeoise Parties, and apart of our reformist faction has been appointed chancellor with reluctant from the <span style="color: #9B0000;">**SAPD**</span> on the condition we grant them more positions. 
 
-go-to: braun_2
+go-to: braun_socialist_2
 
 
-@braun_2
+@braun_socialist_2
 
 The <span style="color: #9B0000;">**SAPD**</span> has significant qualms about appointing Braun as chancellor, mainly around the fact that a Reformist has wanted to take the lead of the coalition. They either ask for more cabinet positions or someone else more fitting to bring the two parties together.
 
-- @breitscheid
-- @muller
-- @wels
-- @seyedewitz
-- @rosenfeld
-- @braun_3: Let the <span style="color: #9B0000;">**SAPD**</span> have their cabinet positions.
+- @breitscheid_socialist
+- @muller_socialist
+- @wels_socialist
+- @seyedewitz_socialist
+- @rosenfeld_socialist
+- @braun_socialist_3: Let the <span style="color: #9B0000;">**SAPD**</span> have their cabinet positions.
 
 @braun_3
 subtitle: Otto Braun will be Chancellor.
@@ -2968,12 +2968,14 @@ go-to: ministries
 Rudolf Breitscheid whom is apart of the Center-Marxists whom still remains in the <span style="color: #c00000;">**SPD**</span> known for his skills in Foreign Policy and formerly part of the <span style="color: #D47B9B;">**USPD**</span>. The Center-Marxists of the <span style="color: #9B0000;">**SAPD**</span> welcome Breitscheid with open arms as a fellow comrade while the Left and <span style="color: #d00000;">Luxembourgists</span> remain skeptical of this decision.
 
 @muller_socialist_chancellor
+view-if: muller_dead = 0
 on-arrival: chancellor = "Muller"; chancellor_party = "SAPD"; leverage += 5; sapd_relation += 5
 go-to: ministries
 
 Hermann Müller, a familiar face and a chancellor in the past, currently affiliated with the Center-Marxists has been chosen to be chancellor due to experience; This new compromise between the two parties could be beneficial and could even start mending the split should time allow it. 
 
 @wels_socialist_chancellor
+view-if: muller_dead = 1
 on-arrival: chancellor = "Wels"; chancellor_party = "SAPD"; leverage += 5; sapd_relation += 5
 go-to: ministries
 
