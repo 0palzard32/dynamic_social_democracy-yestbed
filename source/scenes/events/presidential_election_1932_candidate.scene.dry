@@ -18,18 +18,17 @@ if (Q.hindenburg_run) {
 }
 if (Q.kpd_leader = "Conciliators" and kpd_relation >= 70) {
     Q.communist_candidate_1932 = "Eberlein";
-    Q.communist_candidate_1932_disp = "Hugo Eberlein"
+    Q.communist_candidate_1932_disp = "Hugo Eberlein";
 } 
 if (Q.kpd_leader = "Conciliators" and kpd_relation < 70) {
-    Q.communist_candidate_1932 = "Munzenberg"
-    Q.communist_candidate_1932_disp = "Willi Münzenberg"
+    Q.communist_candidate_1932 = "Munzenberg";
+    Q.communist_candidate_1932_disp = "Willi Münzenberg";
 } else {
-    Q.communist_candidate_1932 = "Thalmann"
-    Q.communist_candidate_1932_disp = "Ernst Thälmann"
+    Q.communist_candidate_1932 = "Thalmann";
+    Q.communist_candidate_1932_disp = "Ernst Thälmann";
 }
 Q.spd_candidate_1932_disp = "Otto Braun";
 if (Q.hindenburg_run) Q.reactionary_candidate_1932_disp = "Paul von Hindenburg";
-if Q.communist_candidate_1932 = "Thalmann";
 
 if (Q.nsdap_candidate_1932) {
     Q.dnvp_candidate_1932 = "Duesterberg";
