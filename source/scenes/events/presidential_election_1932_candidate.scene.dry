@@ -29,7 +29,7 @@ if (Q.kpd_leader = "Conciliators" and kpd_relation < 70) {
 }
 Q.spd_candidate_1932_disp = "Otto Braun";
 if (Q.hindenburg_run) Q.reactionary_candidate_1932_disp = "Paul von Hindenburg";
-if (Q.communist_candidate_1932) = "Thalmann";
+if Q.communist_candidate_1932 = "Thalmann";
 
 if (Q.nsdap_candidate_1932) {
     Q.dnvp_candidate_1932 = "Duesterberg";
