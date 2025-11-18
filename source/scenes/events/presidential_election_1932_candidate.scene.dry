@@ -23,7 +23,7 @@ if (Q.kpd_leader = "Conciliators" and kpd_relation >= 70) {
 if (Q.kpd_leader = "Conciliators" and kpd_relation < 70) {
     Q.communist_candidate_1932 = "Munzenberg";
     Q.communist_candidate_1932_disp = "Willi Münzenberg";
-}else {
+} else {
     Q.communist_candidate_1932 = "Thalmann";
     Q.communist_candidate_1932_disp = "Ernst Thälmann";
 }
